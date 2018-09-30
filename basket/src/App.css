@@ -1,5 +1,7 @@
 .App {
+  margin: 2rem auto;
   text-align: center;
+  width: 50vw;
 }
 
 .App-logo {
@@ -7,19 +9,27 @@
   height: 80px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+table {
+  text-align: left;
+  width: 100%;
+}
+
+tr:nth-child(odd) {
+  background: #eee;
+}
+
+td {
+  padding: 0.25rem 1rem;
+}
+
+button, .button {
+  background: teal;
+  border-radius: .5rem;
   color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
+  display: inline-block;
+  margin: .5rem 1rem;
+  padding: .5rem 1rem;
+  text-decoration: none;
 }
 
 @keyframes App-logo-spin {

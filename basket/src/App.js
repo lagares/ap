@@ -61,10 +61,6 @@ class ProductTable extends React.Component {
 }
 
 class ProductCount extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div>
@@ -109,7 +105,9 @@ render() {
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <div className="App">
+        <img src={logo} className="App-logo" alt="logo" />
+        <h1>Product Basket</h1>
         <ProductListPage products={PRODUCTS} />
       </div>
     );
