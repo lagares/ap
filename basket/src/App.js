@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -14,15 +14,17 @@ class ProductRow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        counter: 0
+        counter: 1 // the product count starts at 1
     }
     this.handleClick = this.handleClick.bind(this);
   };
 
   handleClick() {
-    counter++;
-    console.log(counter);
-    return counter;
+    this.setState({
+      counter: this.state.counter + 1
+    });
+    console.log(this.state.counter);
+    return this.state.counter;
   };
 
   render() {
@@ -61,13 +63,9 @@ class ProductTable extends React.Component {
 class ProductCount extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-        counter: counter
-    }
   }
 
   render() {
-    console.log(counter);
     return (
       <div>
           <Link className="button" to="/checkout">Basket</Link>
@@ -89,21 +87,15 @@ class ProductListPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        counter: 0
+      counter: counter
     }
-    this.handleClick = this.handleClick.bind(this);
   };
-
-handleClick(counter) {
-  this.setState({
-    counter: counter++
-  });
-}
 
 render() {
       return (
       <Router>
         <div>
+          Counter = {this.state.counter}
           <ProductCount counter={this.state.counter} />
           <ProductTable products={this.props.products} />
           <CheckoutButton />
