@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -8,23 +8,25 @@ import logo from './logo.svg';
 import './App.css';
 import Checkout from './Checkout.js';
 
-let counter = 0;
+let total = 0;
 
-class ProductRow extends React.Component {
+class ProductRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        counter: 1 // the product count starts at 1
+        total: 1 // the product count starts at 1
     }
     this.handleClick = this.handleClick.bind(this);
   };
 
   handleClick() {
     this.setState({
-      counter: this.state.counter + 1
+      total: this.state.total + 1 // this is number of clicks per product - *but* resets with each new product
     });
-    console.log(this.state.counter);
-    return this.state.counter;
+    total++; // this is total number of clicks = grand total
+    console.log(this.state.total);
+    console.log(total);
+    return this.state.total;
   };
 
   render() {
@@ -40,7 +42,7 @@ class ProductRow extends React.Component {
   }
 }
 
-class ProductTable extends React.Component {
+class ProductTable extends Component {
   render() {
     const rows = [];
     
@@ -60,18 +62,18 @@ class ProductTable extends React.Component {
   }
 }
 
-class ProductCount extends React.Component {
+class ProductCount extends Component {
   render() {
     return (
       <div>
           <Link className="button" to="/checkout">Basket</Link>
-          <span> {counter}</span>
+          <span> {total}</span>
       </div>
     )
   }
 }
 
-class CheckoutButton extends React.Component {
+class CheckoutButton extends Component {
   render() {
       return (
           <Link className="button" to="/checkout">Proceed To Checkout</Link>
@@ -79,11 +81,11 @@ class CheckoutButton extends React.Component {
   }
 }
 
-class ProductListPage extends React.Component {
+class ProductListPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      counter: counter
+      total: total
     }
   };
 
@@ -91,8 +93,8 @@ render() {
       return (
       <Router>
         <div>
-          Counter = {this.state.counter}
-          <ProductCount counter={this.state.counter} />
+          total = {this.state.total}
+          <ProductCount total={this.state.total} />
           <ProductTable products={this.props.products} />
           <CheckoutButton />
           <Route path="/checkout" component={Checkout}/>
@@ -102,7 +104,7 @@ render() {
   }
 }  
 
-class App extends React.Component {
+class App extends Component {
   render() {
     return (
       <div className="App">

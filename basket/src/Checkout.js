@@ -4,16 +4,29 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import logo from './logo.svg';
 import './App.css';
+import App from './App.js';
+import CheckoutResult from './CheckoutResult';
 
-let counter = 0;
+let counter = 0, total = 0, success = true;
 
-class CheckoutProductRow extends React.Component {
-  handleClick() {
-    counter = counter - this.state.quantity;
+class CheckoutProductRow extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            counter: counter,
+            total: total
+        }
+    }
+  handleRemove() {
+    // this should remove the product listing and decrement the basket total by the correct amount
+    counter = this.state.counter - this.state.total;
 
     return counter;
+  }
+
+  handleChange() {
+    // this keeps track of changes to each product's quantity
   }
 
   render() {
@@ -22,15 +35,15 @@ class CheckoutProductRow extends React.Component {
     return (
       <tr>
           <td>{product.name}</td>
-          <td><input type="text" value={this.state.quantity} onChange={this.handleChange}/></td>  
-          <td>{product.price * this.state.quantity}</td>
-          <td><button onClick={this.handleClick}>Remove</button></td>
+          <td><input type="text" value={this.state.total} onChange={this.handleChange}/></td>  
+          <td>{product.price * this.state.total}</td>
+          <td><button onClick={this.handleRemove}>Remove</button></td>
       </tr>
       );
   }
 }
 
-class CheckoutProductTable extends React.Component {
+class CheckoutProductTable extends Component {
   render() {
     const rows = [];
     
@@ -50,43 +63,52 @@ class CheckoutProductTable extends React.Component {
   }
 }
 
-class ProductCount extends React.Component {
+class CheckoutCount extends Component {
   render() {
       console.log(counter);
       return (
-        <Router>
           <div>
-              <Link className="button" to="/checkout">Basket</Link>
+              <Link className="button" to="/checkoutResult">Basket</Link>
               <span>{counter}</span>
           </div>
-        </Router>
       )
   }
 }
 
-class CheckoutButton extends React.Component {
+class ContinueShoppingButton extends Component {
+    render() {
+        return (
+            <Link className="button" to="/productlist">Continue Shopping</Link>
+        )
+    }    
+  }
+
+class CheckoutButton extends Component {
+  render() {
+      return (
+          <Link className="button" to="/checkoutResult">Checkout</Link>
+      )
+  }
+}
+
+class CheckoutListPage extends Component {
   render() {
       return (
         <Router>
-          <Link className="button" to="/checkout">Checkout</Link>
+            <div>
+                <ContinueShoppingButton />
+                <CheckoutCount />
+                <CheckoutProductTable products={this.props.products} />
+                <CheckoutButton success={this.props.success} />
+                <Route path="/productlist" component={App}/>
+                <Route path="/checkoutResult" component={CheckoutResult}/>
+            </div>
         </Router>
-      )
-  }
-}
-
-class CheckoutListPage extends React.Component {
-  render() {
-      return (
-      <div>
-          <ProductCount />
-          <CheckoutProductTable products={this.props.products} />
-          <CheckoutButton />
-      </div>
-      );
+            );
   }
 }  
 
-class Checkout extends React.Component {
+class Checkout extends Component {
   render() {
     return (
       <div>
@@ -128,22 +150,5 @@ const PRODUCTS = [
     "price": 5.55
   }
 ]
-
-
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <header className="App-header">
-//           <img src={logo} className="App-logo" alt="logo" />
-//           <h1 className="App-title">Welcome to React</h1>
-//         </header>
-//         <p className="App-intro">
-//           To get started, edit <code>src/App.js</code> and save to reload.
-//         </p>
-//       </div>
-//     );
-//   }
-// }
 
 export default Checkout;
