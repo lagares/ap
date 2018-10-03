@@ -4,9 +4,6 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import './App.css';
-import App from './App.js';
-import CheckoutResult from './CheckoutResult';
 
 let counter = 0, total = 0, success = true;
 
@@ -78,7 +75,7 @@ class CheckoutCount extends Component {
 class ContinueShoppingButton extends Component {
     render() {
         return (
-            <Link className="button" to="/productlist">Continue Shopping</Link>
+            <Link className="button" to="/">Continue Shopping</Link>
         )
     }    
   }
@@ -94,17 +91,13 @@ class CheckoutButton extends Component {
 class CheckoutListPage extends Component {
   render() {
       return (
-        <Router>
-            <div>
-                <ContinueShoppingButton />
-                <CheckoutCount />
-                <CheckoutProductTable products={this.props.products} />
-                <CheckoutButton success={this.props.success} />
-                <Route path="/productlist" component={App}/>
-                <Route path="/checkoutResult" component={CheckoutResult}/>
-            </div>
-        </Router>
-            );
+        <div>
+            <ContinueShoppingButton />
+            <CheckoutCount />
+            <CheckoutProductTable products={this.props.products} />
+            <CheckoutButton success={this.props.success} />
+        </div>
+      );
   }
 }  
 

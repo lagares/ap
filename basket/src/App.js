@@ -6,53 +6,51 @@ import {
 } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
-import Checkout from './Checkout.js';
-
-let total = 0;
 
 class ProductRow extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        total: 1 // the product count starts at 1
-    }
-    this.handleClick = this.handleClick.bind(this);
-  };
-
-  handleClick() {
-    this.setState({
-      total: this.state.total + 1 // this is number of clicks per product - *but* resets with each new product
-    });
-    total++; // this is total number of clicks = grand total
-    console.log(this.state.total);
-    console.log(total);
-    return this.state.total;
-  };
-
   render() {
     const product = this.props.product;
-
+  
     return (
       <tr>
           <td>{product.name}</td>
           <td>{product.price}</td>
-          <td><button onClick={this.handleClick}>Add to Basket</button></td>
+          <td><button onClick={() => this.props.onClick()}>Add to Basket</button></td>
+          <td> {product.added}</td>
       </tr>
       );
   }
 }
 
 class ProductTable extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      added: 0
+    };
+    this.handleAdd = this.handleAdd.bind(this);
+  };
+
+  handleAdd() {
+    this.setState({
+      added: this.state.added + 1
+    });
+    return;
+  }
+
   render() {
     const rows = [];
     
     this.props.products.forEach((product) => {
       rows.push(
-      <ProductRow
+        <ProductRow
           product={product}
-          key={product.name} />
-      );
-    });
+          key={product.name}
+          added={this.state.added}
+          onClick={() => this.handleAdd() } />
+        );
+      }
+    );
 
     return (
       <table>
@@ -62,58 +60,59 @@ class ProductTable extends Component {
   }
 }
 
-class ProductCount extends Component {
-  render() {
+// class ProductCount extends Component {
+//   render() {
+//     return (
+//       <div>
+//           <Link className="button" to="/checkout">Basket</Link>
+//           <span> ### </span>
+//       </div>
+//     )
+//   }
+// }
+
+function ProductCount(props) {
     return (
       <div>
           <Link className="button" to="/checkout">Basket</Link>
-          <span> {total}</span>
+          <span> ### </span>
       </div>
     )
   }
-}
 
-class CheckoutButton extends Component {
-  render() {
-      return (
-          <Link className="button" to="/checkout">Proceed To Checkout</Link>
-      )
-  }
+function CheckoutButton(props) {
+  return (
+      <Link className="button" to="/checkout">Proceed To Checkout</Link>
+  )
 }
 
 class ProductListPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      total: total
-    }
+      this.state = {
+      total: Array(this.props.products.length).fill(null)
+    };
   };
 
-render() {
+  render() {
       return (
-      <Router>
         <div>
-          total = {this.state.total}
-          <ProductCount total={this.state.total} />
+          <ProductCount />
           <ProductTable products={this.props.products} />
           <CheckoutButton />
-          <Route path="/checkout" component={Checkout}/>
         </div>
-      </Router>
       );
   }
 }  
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>Product Basket</h1>
-        <ProductListPage products={PRODUCTS} />
-      </div>
-    );
-  }
+function App(props) {
+  return (
+    <div className="App">
+      <img src={logo} className="App-logo" alt="logo" />
+      <h1>Product Basket</h1>
+      <ProductListPage products={PRODUCTS} />
+    </div>
+  );
 }
 
 const PRODUCTS = [
