@@ -53,63 +53,62 @@ class CheckoutProductTable extends Component {
     });
 
     return (
-      <table>
-        <tbody>{rows}</tbody>
-      </table>
+      <div>
+        <Link className="button" to="/">Continue Shopping</Link>
+        <Link className="button" to="/checkoutResult">Basket</Link> <span>###</span>
+        <table>
+          <tbody>{rows}</tbody>
+        </table>
+        <Link className="button" to="/checkoutResult" success={this.props.success}>Checkout</Link>
+        {/* <CheckoutButton success={this.props.success} /> */}  
+      </div>
     );
   }
 }
 
-class CheckoutCount extends Component {
-  render() {
-      console.log(counter);
-      return (
-          <div>
-              <Link className="button" to="/checkoutResult">Basket</Link>
-              <span>{counter}</span>
-          </div>
-      )
-  }
-}
+// class CheckoutCount extends Component {
+//   render() {
+//       console.log(counter);
+//       return (
+//           <div>
+//           </div>
+//       )
+//   }
+// }
 
-class ContinueShoppingButton extends Component {
-    render() {
-        return (
-            <Link className="button" to="/">Continue Shopping</Link>
-        )
-    }    
-  }
+// class ContinueShoppingButton extends Component {
+//     render() {
+//         return (
+//         )
+//     }    
+//   }
 
-class CheckoutButton extends Component {
-  render() {
-      return (
-          <Link className="button" to="/checkoutResult">Checkout</Link>
-      )
-  }
-}
+// class CheckoutButton extends Component {
+//   render() {
+//       return (
+//       )
+//   }
+// }
 
-class CheckoutListPage extends Component {
+class Checkout extends Component {
   render() {
       return (
         <div>
-            <ContinueShoppingButton />
-            <CheckoutCount />
-            <CheckoutProductTable products={this.props.products} />
-            <CheckoutButton success={this.props.success} />
+            <CheckoutProductTable products={PRODUCTS} />
         </div>
       );
   }
 }  
 
-class Checkout extends Component {
-  render() {
-    return (
-      <div>
-        <CheckoutListPage products={PRODUCTS} />
-      </div>
-    );
-  }
-}
+// class Checkout extends Component {
+//   render() {
+//     return (
+//       <div>
+//         <CheckoutListPage products={PRODUCTS} />
+//       </div>
+//     );
+//   }
+// }
 
 const PRODUCTS = [
   {

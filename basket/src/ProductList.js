@@ -8,6 +8,7 @@ import logo from './logo.svg';
 import './App.css';
 
 class ProductRow extends Component {
+
   render() {
     const product = this.props.product;
   
@@ -15,8 +16,7 @@ class ProductRow extends Component {
       <tr>
           <td>{product.name}</td>
           <td>{product.price}</td>
-          <td><button onClick={() => this.props.onClick()}>Add to Basket</button></td>
-          <td> {product.added}</td>
+          <td><button onClick={this.props.onAddClick}>Add to Basket</button></td>
       </tr>
       );
   }
@@ -45,74 +45,34 @@ class ProductTable extends Component {
       rows.push(
         <ProductRow
           product={product}
-          key={product.name}
-          added={this.state.added}
-          onClick={() => this.handleAdd() } />
+          key={product.name} 
+          onAddClick={this.handleAdd} />
         );
       }
     );
 
     return (
-      <table>
-        <tbody>{rows}</tbody>
-      </table>
-    );
-  }
-}
-
-// class ProductCount extends Component {
-//   render() {
-//     return (
-//       <div>
-//           <Link className="button" to="/checkout">Basket</Link>
-//           <span> ### </span>
-//       </div>
-//     )
-//   }
-// }
-
-function ProductCount(props) {
-    return (
       <div>
-          <Link className="button" to="/checkout">Basket</Link>
-          <span> ### </span>
+        <Link className="button" to="/checkout">Basket</Link> <span>{this.state.added}</span>
+        <table>
+          <tbody>{rows}</tbody>
+        </table>
+        <Link className="button" to="/checkout">Proceed To Checkout</Link>
       </div>
-    )
-  }
-
-function CheckoutButton(props) {
-  return (
-      <Link className="button" to="/checkout">Proceed To Checkout</Link>
-  )
-}
-
-class ProductListPage extends Component {
-  constructor(props) {
-    super(props);
-      this.state = {
-      total: Array(this.props.products.length).fill(null)
-    };
-  };
-
-  render() {
-      return (
-        <div>
-          <ProductCount />
-          <ProductTable products={this.props.products} />
-          <CheckoutButton />
-        </div>
       );
   }
-}  
+}
 
-function App(props) {
-  return (
-    <div className="App">
-      <img src={logo} className="App-logo" alt="logo" />
-      <h1>Product Basket</h1>
-      <ProductListPage products={PRODUCTS} />
-    </div>
-  );
+class ProductList extends Component {
+  render() {
+    return (
+      <div className="App">
+        <img src={logo} className="App-logo" alt="logo" />
+        <h1>Product Basket</h1>
+        <ProductTable products={PRODUCTS} />
+      </div>
+    )    
+  }
 }
 
 const PRODUCTS = [
@@ -148,4 +108,4 @@ const PRODUCTS = [
   }
 ]
 
-export default App;
+export default ProductList;

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import Checkout from './Checkout.js';
+import ProductList from './ProductList';
+import Checkout from './Checkout';
 import CheckoutResult from './CheckoutResult';
 
 import {
@@ -13,8 +13,8 @@ import {
 ReactDOM.render(  
 <Router>
     <div>
-        <Route path="/" component={App}/>
-        <Route path="/checkout" component={Checkout}/>
+        <Route exact path="/" component={ProductList}/>
+        <Route path="/checkout" component={Checkout} />
         <Route path="/checkoutResult" component={CheckoutResult}/>
     </div>
 </Router>
