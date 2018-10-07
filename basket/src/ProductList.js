@@ -28,10 +28,10 @@ class ProductTable extends Component {
     this.state = {
       added: 0
     };
-    this.handleAdd = this.handleAdd.bind(this);
+    // this.handleAdd = this.handleAdd.bind(this);
   };
 
-  handleAdd() {
+  handleAdd = () => {
     this.setState({
       added: this.state.added + 1
     });
